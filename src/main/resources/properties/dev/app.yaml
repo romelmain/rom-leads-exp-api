@@ -12,4 +12,9 @@ until:
 request:
   host: "rom-salesforce-sys-api.us-e2.cloudhub.io"
   port: ""
-  path: "/api/v1/"   
+  path: "/api/v1/"  
+  
+#salesforce-sys basic authentication and enforcement client_id
+reqsalesforce:
+  user: "romel"
+  client_id: "1371a7d77dd747f3bba037fce27ed889"

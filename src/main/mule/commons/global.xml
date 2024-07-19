@@ -14,6 +14,14 @@ http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/sc
 		<secure-properties:encrypt algorithm="Blowfish" />
 	</secure-properties:config>
 	<http:request-config name="HTTP_Request_salesforce_sys_api" doc:name="HTTP Request configuration" doc:id="1efc3e4f-4eba-49c2-90bb-d3328d968bb1" basePath="${request.path}" >
-		<http:request-connection host="${request.host}" port="${request.port}" />
+		<http:request-connection host="${request.host}" port="${request.port}" >
+			<http:authentication >
+				<http:basic-authentication username="${reqsalesforce.user}" password="${secure::reqsalesforce.password}" />
+			</http:authentication>
+		</http:request-connection>
+		<http:default-headers >
+			<http:default-header key="client_id" value="${reqsalesforce.client_id}" />
+			<http:default-header key="client_secret" value="${secure::reqsalesforce.client_secret}" />
+		</http:default-headers>
 	</http:request-config>
 </mule>

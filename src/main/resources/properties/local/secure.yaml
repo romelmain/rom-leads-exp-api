@@ -1,0 +1,4 @@
+#salesforce-sys basic authentication and enforcement client_id
+reqsalesforce:
+  password: "![WfZRmAxg8DY=]"
+  client_secret: "![b5TJB7/5/dsDYq0CWi4NY4rmcVPDTR40xp7Qa6DbwkRnfX4t18iKVA==]"

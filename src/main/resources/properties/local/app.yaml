@@ -13,3 +13,8 @@ request:
   host: "localhost"
   port: "8081"
   path: "/api/v1/"
+  
+#salesforce-sys basic authentication and enforcement client_id
+reqsalesforce:
+  user: "romel"
+  client_id: "1371a7d77dd747f3bba037fce27ed889"
