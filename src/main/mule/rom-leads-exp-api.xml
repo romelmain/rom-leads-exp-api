@@ -154,6 +154,29 @@ output application/json
             </ee:message>
         </ee:transform>
     </flow>
+    <flow name="get:\products:rom-leads-exp-api-config">
+        <ee:transform doc:name="Transform Message">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+[
+  {
+    productName: "Xiaomi",
+    productCode: "abc"
+  }, 
+  {
+    productName: "Laptop",
+    productCode: "dce"
+  }, 
+  {
+    productName: "Cable Usb",
+    productCode: "qaz"
+  }
+] as Array {encoding: "UTF-8", mediaType: "application/json"}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
     <flow name="get:\leads\(id):rom-leads-exp-api-config">
         <ee:transform doc:name="Transform Message">
             <ee:variables>
@@ -187,6 +210,19 @@ output application/json
 {
   code: 201,
   message: "Candidato creado exitosamente"
+} as Object {encoding: "UTF-8", mediaType: "application/json"}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="post:\products:application\json:rom-leads-exp-api-config">
+        <ee:transform doc:name="Transform Message">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  code: 201,
+  message: "Producto creado exitosamente"
 } as Object {encoding: "UTF-8", mediaType: "application/json"}]]></ee:set-payload>
             </ee:message>
         </ee:transform>
