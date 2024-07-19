@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="getLeadByIdFlow" doc:id="06dca1f2-4a97-4839-9ebf-d1185cee8bdd" >
+		<logger level="INFO" doc:name="Start getLeadByIdFlow" doc:id="4e46a34e-f804-4d72-9830-833b077f0b17" message="Start getLeadByIdFlow"/>
+		<until-successful maxRetries="${until.successful.maxretries}" doc:name="Until Successful" doc:id="fbc8d7e5-2a24-4bc8-973e-1a7fc274ad8f" millisBetweenRetries="${until.successful.timebetween}">
+			<try doc:name="Try" doc:id="ddc87c27-47d0-4565-92f9-7c1dfc6a6726" >
+				<http:request method="GET" doc:name="Get Lead By ID" doc:id="86f008cd-b744-4b4e-a811-a128cb1a2172" config-ref="HTTP_Request_salesforce_sys_api" path="leads/{id}">
+			<http:uri-params><![CDATA[#[output application/java
+---
+{
+	"id" : vars.id
+}]]]></http:uri-params>
+		</http:request>
+				<error-handler >
+					<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="777f74ed-1c20-4a54-a076-4f410d2e3ace" >
+						<ee:transform doc:name="set Error" doc:id="2a426b34-1b5a-4ffb-8c8a-02dc65daa673" >
+							<ee:message >
+								<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+{
+}]]></ee:set-payload>
+							</ee:message>
+						</ee:transform>
+					</on-error-propagate>
+				</error-handler>
+			</try>
+		</until-successful>
+		<ee:transform doc:name="Set Final Response" doc:id="26f0045e-648c-4caa-bd2f-242524a1ab04" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="End getLeadByIdFlow" doc:id="8adf03ac-7497-4b1e-a2b2-a47a9197eff5" message="End getLeadByIdFlow"/>
+	</flow>
+</mule>

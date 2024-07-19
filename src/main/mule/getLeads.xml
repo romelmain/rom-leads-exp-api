@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="getLeadsFlow" doc:id="b170c703-1d35-409c-bbe6-2f91fe16b11f" >
+		<logger level="INFO" doc:name="Start getLeadsFlow" doc:id="e847d3d3-b4d5-4397-afd1-eff5eb55f6c0" message="Start getLeadsFlow"/>
+		<until-successful maxRetries="${until.successful.maxretries}" doc:name="Until Successful" doc:id="2a7337f9-ae84-475c-8601-416055ca7504" millisBetweenRetries="${until.successful.timebetween}">
+			<try doc:name="Try" doc:id="624fa176-d912-49ca-a3d1-81fa375436d3" >
+				<http:request method="GET" doc:name="Get Leads" doc:id="ad725bbf-a476-4ea6-bfd0-73fdb0c80a23" config-ref="HTTP_Request_salesforce_sys_api" path="leads" />
+				<error-handler >
+					<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="7075d30f-4a21-4efa-9add-7c62137fb64f" >
+						<ee:transform doc:name="Set Error" doc:id="095050f2-5b58-4a27-a12d-c660b10c5079" >
+							<ee:message >
+								<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+{
+}]]></ee:set-payload>
+							</ee:message>
+						</ee:transform>
+					</on-error-propagate>
+				</error-handler>
+			</try>
+		</until-successful>
+		<ee:transform doc:name="Set Final Response" doc:id="a31f96b3-628d-4274-8b0e-fd985e561356" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="End getLeadsFlow" doc:id="5d56000c-cf20-4297-ac87-d5bed19d181e" message="End getLeadsFlow"/>
+	</flow>
+</mule>

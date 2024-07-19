@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:secure-properties="http://www.mulesoft.org/schema/mule/secure-properties" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/schema/mule/secure-properties/current/mule-secure-properties.xsd">
+	<configuration-properties doc:name="Configuration properties" doc:id="3bd6508c-4407-4ee8-bf84-0c39f9d6dcab" file="properties\commons.yaml" />
+	<configuration-properties doc:name="Configuration properties" doc:id="0af7cf05-2693-4a67-9012-ad45385479f2" file="properties/${mule.env}/app.yaml" />
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="34fa28f8-abf7-4364-917f-757b247e6f69" >
+		<http:listener-connection host="${api.host}" port="${api.port}" />
+	</http:listener-config>
+	<secure-properties:config name="Secure_Properties_Config" doc:name="Secure Properties Config" doc:id="a20b8a28-80c8-4778-a820-2f29a9ab867c" file="properties/${mule.env}/secure.yaml" key="${prop.key}" >
+		<secure-properties:encrypt algorithm="Blowfish" />
+	</secure-properties:config>
+	<http:request-config name="HTTP_Request_salesforce_sys_api" doc:name="HTTP Request configuration" doc:id="1efc3e4f-4eba-49c2-90bb-d3328d968bb1" basePath="${request.path}" >
+		<http:request-connection host="${request.host}" port="${request.port}" />
+	</http:request-config>
+</mule>

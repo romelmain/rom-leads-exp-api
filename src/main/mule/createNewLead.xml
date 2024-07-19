@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="createNewLeadFlow" doc:id="b52838a8-48a0-4ee3-8b32-d41e8731be97" >
+		<logger level="INFO" doc:name="Start createNewLeadFlow" doc:id="01b3777f-fc40-4fd9-8cae-e5913885192d" message="Start createNewLeadFlow"/>
+		<until-successful maxRetries="${until.successful.maxretries}" doc:name="Until Successful" doc:id="240cf10d-196e-4ba8-b4cc-921b1bb7da2a" millisBetweenRetries="${until.successful.timebetween}">
+			<try doc:name="Try" doc:id="88903627-8f59-459d-a1af-23543e8f5af2" >
+				<http:request method="POST" doc:name="Create New Lead" doc:id="9acb9c8e-5ddc-4206-b1e2-bd0c34889c04" config-ref="HTTP_Request_salesforce_sys_api" path="leads" />
+				<error-handler >
+					<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="709351ec-9802-4850-ac43-157b097fae33" >
+						<ee:transform doc:name="Set Error" doc:id="4e5997c1-a7e3-4ef2-956a-9d23a1d75274" >
+							<ee:message >
+								<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+							</ee:message>
+						</ee:transform>
+					</on-error-propagate>
+				</error-handler>
+			</try>
+		</until-successful>
+		<ee:transform doc:name="Set Final Response" doc:id="625ad7f5-18b0-4366-8b6b-9ecdd39e7e10" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="End createNewLeadFlow" doc:id="a69c80e8-90ab-4583-8c3a-1b6701cc1ad2" message="End createNewLeadFlow"/>
+	</flow>
+</mule>
