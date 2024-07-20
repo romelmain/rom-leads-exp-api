@@ -94,7 +94,7 @@ output application/json
         </error-handler>
     </flow>
     <flow name="get:\leads:rom-leads-exp-api-config">
-		<flow-ref doc:name="getLeadsFlow" doc:id="52190768-5496-4c47-9ce0-6ccc8156beef" name="getLeadsFlow"/>
+		<flow-ref doc:name="getLeadsFlow" doc:id="2c4cc06e-b936-470f-a1c0-825f0dd122dd" name="getLeadsFlow"/>
     </flow>
     <flow name="get:\leads\(id):rom-leads-exp-api-config">
         <ee:transform doc:name="Set ID">
@@ -102,9 +102,9 @@ output application/json
                 <ee:set-variable variableName="id">attributes.uriParams.'id'</ee:set-variable>
             </ee:variables>
         </ee:transform>
-		<flow-ref doc:name="getLeadByIdFlow" doc:id="24317562-e032-47e6-8c17-b17b1b00f5c2" name="getLeadByIdFlow"/>
+		<flow-ref doc:name="getLeadByIdFlow" doc:id="bb143686-f1d0-4b69-873f-3f37555071f6" name="getLeadByIdFlow"/>
     </flow>
     <flow name="post:\leads:application\json:rom-leads-exp-api-config">
-		<flow-ref doc:name="createNewLeadFlow" doc:id="4b9d7408-e000-459b-8dc6-a41511c7315d" name="createNewLeadFlow"/>
+		<flow-ref doc:name="createNewLeadFlow" doc:id="5f90050f-e72e-44f1-99d7-dcb5bfe1eaae" name="createNewLeadFlow"/>
     </flow>
 </mule>
